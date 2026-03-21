@@ -43,10 +43,49 @@ class ModelTrainer:
                 'XGBoost Regressor': XGBRegressor(random_state=42),
                 'Decision Tree Regressor': DecisionTreeRegressor(random_state=42)
             }
+            param_grids = {
+            'Linear Regression': {},  # Linear Regression has no hyperparameters to tune
+            'Ridge': {
+                'alpha': [0.1, 1.0, 10.0, 100.0]
+            },
+            'Lasso': {
+                'alpha': [0.001, 0.01, 0.1, 1.0, 10.0]
+            },
+            'ElasticNet': {
+                'alpha': [0.001, 0.01, 0.1, 1.0],
+                'l1_ratio': [0.2, 0.5, 0.8]
+            },
+            'Support Vector Regressor': {
+                'C': [0.1, 1.0, 10.0, 100.0],
+                'kernel': ['linear', 'rbf'],
+                'epsilon': [0.01, 0.1, 0.2]
+            },
+            'K-Nearest Neighbors': {
+                'n_neighbors': [3, 5, 7, 9, 11],
+                'weights': ['uniform', 'distance']
+            },
+            'Random Forest Regressor': {
+                'n_estimators': [100, 200, 300],
+                'max_depth': [10, 20, 30, None],
+                'min_samples_split': [2, 5, 10],
+                'min_samples_leaf': [1, 2, 4]
+            },
+            'Decision Tree Regressor': {
+                'max_depth': [5, 10, 15, 20, None],
+                'min_samples_split': [2, 5, 10],
+                'min_samples_leaf': [1, 2, 4]
+            },
+            'XGBoost Regressor': {
+                'n_estimators': [100, 200, 300],
+                'max_depth': [3, 5, 7],
+                'learning_rate': [0.001, 0.01, 0.1],
+                'subsample': [0.7, 0.8, 0.9]
+            }
+        }
             logging.info("Models defined successfully for training")
             logging.info("model training started")
 
-            model_report :dict = evaluate_models(X_train = X_train, y_train=y_train, X_test=X_test, y_test = y_test, models=models)
+            model_report :dict = evaluate_models(X_train, y_train, X_test, y_test, models, param_grids)
 
             best_model_score = max(sorted(model_report.values()))
             best_model_name = list(model_report.keys())[list(model_report.values()).index(best_model_score)]
@@ -65,7 +104,7 @@ class ModelTrainer:
             logging.info(f"Trained model saved at {self.model_trainer_config.trained_model_file_path}")
             predictions = best_model.predict(X_test)
             r2 = r2_score(y_test, predictions)
-            return r2
+            return best_model_name, best_model, r2
         except Exception as e:
             logging.info("Error occurred in Model Training")
             raise CustomException(e, sys)

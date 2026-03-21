@@ -6,6 +6,9 @@ import sys
 from src.utils import save_object
 from src.components.model_trainer import ModelTrainer
 from src.components.model_trainer import ModelTrainerConfig
+
+
+
 if __name__ == "__main__":
     try:
         logging.info("Training pipeline started")
@@ -23,7 +26,15 @@ if __name__ == "__main__":
 
         # Model Training
         model_trainer = ModelTrainer()
-        model_trainer.initiate_model_trainer(train_arr, test_arr)
+        best_model_name, best_model, r2 = model_trainer.initiate_model_trainer(train_arr, test_arr)
+        
+        # Extract X_train and y_train from train_arr
+        X_train = train_arr[:,:-1]
+        y_train = train_arr[:,-1]
+        
+
+       
+
         logging.info("Model training pipeline completed successfully")
 
         
