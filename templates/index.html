@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Student Prediction</title>
+    <style>
+        body { font-family: Arial; margin: 40px; line-height: 1.6; }
+        .result-box { background: #e1f5fe; padding: 20px; border-radius: 8px; margin-top: 20px; border: 1px solid #b3e5fc; }
+        label { font-weight: bold; display: block; margin-top: 10px; }
+        input, select { padding: 8px; width: 300px; }
+        .btn { background: #0288d1; color: white; padding: 10px 20px; border: none; cursor: pointer; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <h1>Exam Performance Predictor</h1>
+
+    <form action="/predict" method="POST">
+        <label>Hours Studied:</label>
+        <input type="number" name="Hours_Studied" step="0.1" required>
+
+        <label>Attendance (%):</label>
+        <input type="number" name="Attendance" min="0" max="100" required>
+
+        <label>Parental Involvement:</label>
+        <select name="Parental_Involvement">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+
+        <label>Access to Resources:</label>
+        <select name="Access_to_Resources">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+
+        <label>Extracurricular Activities:</label>
+        <select name="Extracurricular_Activities">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <label>Sleep Hours:</label>
+        <input type="number" name="Sleep_Hours" step="0.1" required>
+
+        <label>Previous Scores:</label>
+        <input type="number" name="Previous_Scores" required>
+
+        <label>Motivation Level:</label>
+        <select name="Motivation_Level">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+
+        <label>Internet Access:</label>
+        <select name="Internet_Access">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <label>Tutoring Sessions:</label>
+        <input type="number" name="Tutoring_Sessions" required>
+
+        <label>Family Income:</label>
+        <select name="Family_Income">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+
+        <label>Teacher Quality:</label>
+        <select name="Teacher_Quality">
+            <option value="Low">Low</option>
+            <option value="Medium">Medium</option>
+            <option value="High">High</option>
+        </select>
+
+        <label>School Type:</label>
+        <select name="School_Type">
+            <option value="Public">Public</option>
+            <option value="Private">Private</option>
+        </select>
+
+        <label>Peer Influence:</label>
+        <select name="Peer_Influence">
+            <option value="Positive">Positive</option>
+            <option value="Neutral">Neutral</option>
+            <option value="Negative">Negative</option>
+        </select>
+
+        <label>Physical Activity:</label>
+        <input type="number" name="Physical_Activity" required>
+
+        <label>Learning Disabilities:</label>
+        <select name="Learning_Disabilities">
+            <option value="Yes">Yes</option>
+            <option value="No">No</option>
+        </select>
+
+        <label>Parental Education Level:</label>
+        <select name="Parental_Education_Level">
+            <option value="High School">High School</option>
+            <option value="College">College</option>
+            <option value="Postgraduate">Postgraduate</option>
+        </select>
+
+        <label>Distance from Home:</label>
+        <select name="Distance_from_Home">
+            <option value="Near">Near</option>
+            <option value="Moderate">Moderate</option>
+            <option value="Far">Far</option>
+        </select>
+
+        <label>Gender:</label>
+        <select name="Gender">
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+        </select>
+
+        <button type="submit" class="btn">Predict Score</button>
+    </form>
+
+    {% if prediction_text %}
+    <div class="result-box">
+        <h2>{{ prediction_text }}</h2>
+    </div>
+    {% endif %}
+
+</body>
+</html>

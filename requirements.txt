@@ -6,4 +6,5 @@ seaborn
 joblib
 xgboost
 dill
+flask
 -e .
